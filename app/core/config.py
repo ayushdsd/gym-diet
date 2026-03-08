@@ -2,7 +2,9 @@ import os
 from dotenv import load_dotenv
 
 # Load .env file only in development (Railway sets env vars directly)
-load_dotenv()
+# Note: .env should NOT be in your Git repository to avoid overriding Railway's env vars
+if os.path.exists(".env"):
+    load_dotenv()
 
 
 class Settings:
