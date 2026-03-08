@@ -1,12 +1,23 @@
 import os
 from dotenv import load_dotenv
 
+# Load .env file only in development (Railway sets env vars directly)
 load_dotenv()
 
 
 class Settings:
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:postgres@localhost:5432/gymdiet")
-    JWT_SECRET: str = os.getenv("JWT_SECRET", "change-this-secret")
+    # Get DATABASE_URL and fix Railway's postgres:// to postgresql://
+    _database_url: str = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:postgres@localhost:5432/gymdiet")
+    
+    @property
+    def DATABASE_URL(self) -> str:
+        """Fix Railway's postgres:// URL to postgresql:// for SQLAlchemy"""
+        url = self._database_url
+        if url and url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql://", 1)
+        return url
+    
+    JWT_SECRET: str = os.getenv("JWT_SECRET", os.getenv("SECRET_KEY", "change-this-secret"))
     JWT_ALGORITHM: str = os.getenv("JWT_ALGORITHM", "HS256")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
     OPENAI_API_KEY: str | None = os.getenv("OPENAI_API_KEY")
