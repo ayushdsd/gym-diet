@@ -4,7 +4,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "echo '=== ENVIRONMENT CHECK ===' && env | grep -i 'database\\|railway' && echo '=== END ENV CHECK ===' && python scripts/railway_debug.py && alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT",
+    "startCommand": "python scripts/test_env_on_railway.py && alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }

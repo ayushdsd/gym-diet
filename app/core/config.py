@@ -1,22 +1,31 @@
 import os
 from dotenv import load_dotenv
 
-# Load .env file only in development (Railway sets env vars directly)
-# Note: .env should NOT be in your Git repository to avoid overriding Railway's env vars
-if os.path.exists(".env"):
+# CRITICAL: Only load .env in local development
+# On Railway, environment variables are set directly and .env should not exist
+if os.path.exists(".env") and not os.getenv("RAILWAY_ENVIRONMENT"):
     load_dotenv()
 
 
 class Settings:
     # Get DATABASE_URL and fix Railway's postgres:// to postgresql://
+    # IMPORTANT: This default should NEVER be used on Railway
     _database_url: str = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:postgres@localhost:5432/gymdiet")
     
     @property
     def DATABASE_URL(self) -> str:
         """Fix Railway's postgres:// URL to postgresql:// for SQLAlchemy"""
         url = self._database_url
+        
+        # Debug: Print what we got
+        if os.getenv("RAILWAY_ENVIRONMENT"):
+            print(f"[CONFIG] Raw DATABASE_URL from env: {url[:50]}...")
+        
         if url and url.startswith("postgres://"):
             url = url.replace("postgres://", "postgresql://", 1)
+            if os.getenv("RAILWAY_ENVIRONMENT"):
+                print(f"[CONFIG] Converted to: {url[:50]}...")
+        
         return url
     
     JWT_SECRET: str = os.getenv("JWT_SECRET", os.getenv("SECRET_KEY", "change-this-secret"))
