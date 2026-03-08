@@ -1,1 +1,1 @@
-web: python scripts/railway_debug.py && alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+web: echo '=== ENVIRONMENT CHECK ===' && env | grep -i 'database\|railway' && echo '=== END ENV CHECK ===' && python scripts/railway_debug.py && alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
