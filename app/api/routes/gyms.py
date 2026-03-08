@@ -30,8 +30,8 @@ def list_gyms(location: str = Query(None), db: Session = Depends(get_db)):
 def create_gym(payload: GymCreate, db: Session = Depends(get_db)):
     existing = db.query(Gym).filter(Gym.name == payload.name).first()
     if existing:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
-    gym = Gym(name=payload.name)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Gym already exists")
+    gym = Gym(name=payload.name, location=payload.location)
     db.add(gym)
     db.commit()
     db.refresh(gym)

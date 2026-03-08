@@ -26,19 +26,19 @@ print("=" * 60)
 for gym in gyms:
     try:
         response = requests.post(
-            f"{RAILWAY_URL}/gyms/",
+            f"{RAILWAY_URL}/gyms",
             json=gym,
             timeout=10
         )
         
-        if response.status_code == 200:
+        if response.status_code == 201:
             data = response.json()
-            print(f"✅ Created: {gym['name']} (ID: {data.get('id')})")
-        elif response.status_code == 400 and "already exists" in response.text.lower():
+            print(f"✅ Created: {gym['name']} at {gym['location']} (ID: {data['id']})")
+        elif response.status_code == 400:
             print(f"ℹ️  Already exists: {gym['name']}")
         else:
             print(f"❌ Failed: {gym['name']} - Status {response.status_code}")
-            print(f"   Response: {response.text[:100]}")
+            print(f"   Response: {response.text[:200]}")
     except Exception as e:
         print(f"❌ Error creating {gym['name']}: {e}")
 
