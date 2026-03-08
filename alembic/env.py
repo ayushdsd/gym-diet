@@ -12,7 +12,13 @@ from app.core.config import settings
 
 config = context.config
 section = config.config_ini_section
-config.set_section_option(section, "sqlalchemy.url", settings.DATABASE_URL)
+
+# Fix Railway's postgres:// URL to postgresql://
+database_url = settings.DATABASE_URL
+if database_url and database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+config.set_section_option(section, "sqlalchemy.url", database_url)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
