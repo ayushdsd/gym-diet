@@ -11,18 +11,10 @@ from app.api.routes.gamification import router as gamification_router
 
 app = FastAPI(title="Multi-Gym AI Nutrition SaaS API", version="0.1.0")
 
-# CORS middleware - allow requests from frontend
+# CORS middleware - allow requests from all origins (mobile app + web)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:8081",  # Expo web
-        "http://localhost:19006",  # Expo web alternative port
-        "http://127.0.0.1:8081",
-        "http://127.0.0.1:19006",
-        "http://192.168.*:8081",  # Local network (for physical devices)
-        "http://10.0.2.2:8081",  # Android emulator
-    ],
-    allow_origin_regex=r"http://(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.0\.2\.2):(8081|19006)",
+    allow_origins=["*"],  # Allow all origins for mobile app
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

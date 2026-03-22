@@ -93,7 +93,15 @@ def create_meal(payload: MealCreate, db: Session = Depends(get_db), user: User =
         description=payload.description,
     )
     db.add(meal)
-    db.flush()
+    
+    try:
+        db.flush()
+    except Exception as e:
+        db.rollback()
+        print(f"Database error saving meal: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     
     # Initialize gamification response
     gamification_data = {
