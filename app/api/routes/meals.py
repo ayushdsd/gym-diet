@@ -77,6 +77,7 @@ def _check_daily_goal(totals: dict, targets: dict) -> bool:
 
 @router.post("", status_code=201)
 def create_meal(payload: MealCreate, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    # Validate and sanitize input
     try:
         normalized = sanitize_meal_input(payload.protein, payload.carbs, payload.fats, payload.calories)
     except ValueError as e:
@@ -94,31 +95,33 @@ def create_meal(payload: MealCreate, db: Session = Depends(get_db), user: User =
     )
     db.add(meal)
     
+    # Flush to database to get meal ID
     try:
         db.flush()
     except Exception as e:
         db.rollback()
-        print(f"Database error saving meal: {e}")
+        print(f"❌ Database error saving meal: {e}")
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     
-    # Initialize gamification response
+    # Initialize gamification response with safe defaults
     gamification_data = {
         "xp_awarded": 0,
         "xp_breakdown": {},
-        "new_total_xp": user.total_xp,
+        "new_total_xp": user.total_xp or 0,
         "level_up": False,
         "old_level": 0,
         "new_level": 0,
-        "current_streak": user.current_streak,
+        "current_streak": user.current_streak or 0,
         "streak_freeze_earned": False,
         "badges_unlocked": []
     }
     
+    # Try gamification processing, but don't fail meal logging if it errors
     try:
         now = datetime.now(timezone.utc)
-        old_xp = user.total_xp
+        old_xp = user.total_xp or 0
         
         # 1. Award XP for meal logging
         meal_xp_result = award_xp(db, user, "meal_logged", {})
@@ -150,7 +153,7 @@ def create_meal(payload: MealCreate, db: Session = Depends(get_db), user: User =
             gamification_data["xp_breakdown"]["daily_goal_xp"] = daily_xp_result.total_xp_awarded
         
         # 4. Check for level up
-        new_xp = user.total_xp
+        new_xp = user.total_xp or 0
         level_up_occurred, old_level, new_level = check_level_up(old_xp, new_xp)
         gamification_data["level_up"] = level_up_occurred
         gamification_data["old_level"] = old_level
@@ -159,12 +162,12 @@ def create_meal(payload: MealCreate, db: Session = Depends(get_db), user: User =
         
         # 5. Award streak freeze if milestone level reached
         if level_up_occurred and is_milestone_level(new_level):
-            user.streak_freeze_count += 1
+            user.streak_freeze_count = (user.streak_freeze_count or 0) + 1
             gamification_data["streak_freeze_earned"] = True
         
         # 6. Check for badge unlocks
         context = {
-            "meal_count": db.query(func.count(MealLog.id)).filter(MealLog.user_id == user.id).scalar(),
+            "meal_count": db.query(func.count(MealLog.id)).filter(MealLog.user_id == user.id).scalar() or 0,
             "new_level": new_level,
             "level_up": level_up_occurred,
         }
@@ -182,13 +185,21 @@ def create_meal(payload: MealCreate, db: Session = Depends(get_db), user: User =
         
     except Exception as e:
         # Log error but don't fail meal logging
-        print(f"Gamification error: {e}")
+        print(f"⚠️ Gamification error (meal still saved): {e}")
         import traceback
         traceback.print_exc()
+        # Keep default gamification_data values
     
     # Commit everything
-    db.commit()
-    db.refresh(meal)
+    try:
+        db.commit()
+        db.refresh(meal)
+    except Exception as e:
+        db.rollback()
+        print(f"❌ Database commit error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Database commit error: {str(e)}")
     
     # Return meal with gamification data
     return {
