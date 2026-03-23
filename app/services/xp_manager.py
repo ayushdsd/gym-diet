@@ -287,13 +287,24 @@ def award_xp(
     breakdown["base_xp"] = base_xp
     breakdown["total_xp"] = total_xp
     
-    # Record XP transaction
-    reason = f"Awarded {total_xp} XP for {action_type}"
-    if action_type == "macro_goal":
+    # Record XP transaction with unique reason
+    # Add timestamp to make reason unique for multiple meals per day
+    timestamp = datetime.utcnow().isoformat()
+    
+    if action_type == "meal_logged":
+        # Include timestamp to allow multiple meals per day
+        reason = f"Meal logged at {timestamp}"
+    elif action_type == "macro_goal":
         completed = context.get("completed_macros", [])
-        reason = f"Completed macro goals: {', '.join(completed)}"
+        # Include date to allow one macro goal award per day
+        date_str = datetime.utcnow().date().isoformat()
+        reason = f"Macro goals ({', '.join(completed)}) on {date_str}"
     elif action_type == "daily_goal":
-        reason = "Completed all daily macro goals"
+        # Include date to allow one daily goal award per day
+        date_str = datetime.utcnow().date().isoformat()
+        reason = f"Daily goal completed on {date_str}"
+    else:
+        reason = f"{action_type} at {timestamp}"
     
     record_xp_transaction(
         db=db,
