@@ -187,7 +187,9 @@ def record_xp_transaction(
     gym_id: int,
     delta: int,
     action_type: str,
-    reason: str
+    reason: str,
+    source: str = "meal_log",
+    reference_id: int | None = None
 ) -> XPLog:
     """
     Create an XPLog entry to record an XP transaction.
@@ -199,6 +201,8 @@ def record_xp_transaction(
         delta: Amount of XP awarded (can be negative for penalties)
         action_type: Type of action (e.g., "meal_logged", "macro_goal", "daily_goal")
         reason: Human-readable description of why XP was awarded
+        source: Source of the XP (e.g., "meal_log", "achievement")
+        reference_id: ID of the related entity (e.g., meal_id for meal_logged)
         
     Returns:
         Created XPLog instance
@@ -211,6 +215,8 @@ def record_xp_transaction(
         delta=delta,
         action_type=action_type,
         reason=reason,
+        source=source,
+        reference_id=reference_id,
         created_at=datetime.utcnow()
     )
     db.add(xp_log)
@@ -240,7 +246,7 @@ def award_xp(
         action_type: Type of action triggering XP award
                     ("meal_logged", "macro_goal", "daily_goal")
         context: Additional context for XP calculation
-                - For "meal_logged": {}
+                - For "meal_logged": {"meal_id": int}
                 - For "macro_goal": {"completed_macros": ["protein", "carbs"]}
                 - For "daily_goal": {}
                 
@@ -252,11 +258,14 @@ def award_xp(
     # Calculate base XP based on action type
     base_xp = 0
     breakdown = {}
+    reference_id = None
+    source = "meal_log"
     
     if action_type == "meal_logged":
         meal_xp = calculate_xp_for_meal()
         base_xp += meal_xp
         breakdown["meal_logged"] = meal_xp
+        reference_id = context.get("meal_id")
         
     elif action_type == "macro_goal":
         completed_macros = context.get("completed_macros", [])
@@ -312,7 +321,9 @@ def award_xp(
         gym_id=user.gym_id,
         delta=total_xp,
         action_type=action_type,
-        reason=reason
+        reason=reason,
+        source=source,
+        reference_id=reference_id
     )
     
     # Update user's total XP with overflow protection (Requirement 15.3)

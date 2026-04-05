@@ -65,6 +65,8 @@ class XPLog(Base):
     delta: Mapped[int] = mapped_column(Integer, nullable=False)
     reason: Mapped[str | None] = mapped_column(Text, nullable=True)
     action_type: Mapped[str] = mapped_column(String(50), nullable=False, default='meal_logged', index=True)
+    source: Mapped[str] = mapped_column(String(50), nullable=False, default='meal_log', index=True)
+    reference_id: Mapped[int | None] = mapped_column(Integer, nullable=True, index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow, nullable=False, index=True)
     user: Mapped[User] = relationship(back_populates="xp_logs")
 

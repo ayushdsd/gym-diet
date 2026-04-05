@@ -123,8 +123,8 @@ def create_meal(payload: MealCreate, db: Session = Depends(get_db), user: User =
         now = datetime.now(timezone.utc)
         old_xp = user.total_xp or 0
         
-        # 1. Award XP for meal logging
-        meal_xp_result = award_xp(db, user, "meal_logged", {})
+        # 1. Award XP for meal logging (pass meal_id as reference)
+        meal_xp_result = award_xp(db, user, "meal_logged", {"meal_id": meal.id})
         gamification_data["xp_awarded"] += meal_xp_result.total_xp_awarded
         gamification_data["xp_breakdown"].update(meal_xp_result.breakdown)
         
@@ -377,9 +377,12 @@ def get_monthly_goals(db: Session = Depends(get_db), user: User = Depends(get_cu
     }
 
 
-@router.delete("/{meal_id}", status_code=204)
+@router.delete("/{meal_id}", status_code=200)
 def delete_meal(meal_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    """Delete a meal by ID"""
+    """Delete a meal by ID and remove associated XP"""
+    from app.models.models import XPLog
+    from app.services.level_system import check_level_up
+    
     meal = db.query(MealLog).filter(
         MealLog.id == meal_id,
         MealLog.user_id == user.id,
@@ -389,7 +392,39 @@ def delete_meal(meal_id: int, db: Session = Depends(get_db), user: User = Depend
     if not meal:
         raise HTTPException(status_code=404, detail="Meal not found")
     
+    # Find XP logs associated with this meal
+    xp_logs = db.query(XPLog).filter(
+        XPLog.reference_id == meal_id,
+        XPLog.source == "meal_log",
+        XPLog.user_id == user.id
+    ).all()
+    
+    # Calculate total XP to remove
+    total_xp_to_remove = sum(log.delta for log in xp_logs)
+    
+    # Store old level for comparison
+    old_xp = user.total_xp or 0
+    old_level = max(1, int((old_xp / 100) ** 0.5))
+    
+    # Remove XP from user
+    user.total_xp = max(0, (user.total_xp or 0) - total_xp_to_remove)
+    new_xp = user.total_xp
+    new_level = max(1, int((new_xp / 100) ** 0.5))
+    
+    # Delete XP logs
+    for log in xp_logs:
+        db.delete(log)
+    
+    # Delete meal
     db.delete(meal)
     db.commit()
     
-    return None
+    # Return gamification data for frontend update
+    return {
+        "success": True,
+        "xp_removed": total_xp_to_remove,
+        "new_total_xp": new_xp,
+        "old_level": old_level,
+        "new_level": new_level,
+        "level_changed": old_level != new_level
+    }
