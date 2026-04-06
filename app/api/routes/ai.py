@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import get_db, get_current_user
 from app.schemas.ai import AIRequest, AIResult
-from app.services.ai import call_openai_with_retries
+from app.services.ai import call_openai_with_retries, call_openai_with_context
 from app.services.nutrition import sanitize_meal_input, sum_macros, weekly_averages
 from app.models.models import MealLog, User, ChatMessage
 
@@ -47,8 +47,8 @@ def ai_message(payload: AIRequest, db: Session = Depends(get_db), user: User = D
     db.add(user_msg)
     db.commit()
     
-    # Get AI response
-    result, err = call_openai_with_retries(payload.message)
+    # Get AI response WITH CONTEXT (RAG Phase 1)
+    result, err = call_openai_with_context(payload.message, user, db)
     if not result:
         raise HTTPException(status_code=502, detail=f"openai_error: {err or 'unknown'}")
     
