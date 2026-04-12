@@ -1,33 +1,127 @@
-# Gym Diet Tracker
+# AI Diet Tracker 🤖🍽️
 
-A full-stack mobile application for tracking nutrition, meals, and fitness goals with AI-powered features and gamification.
+An intelligent diet tracking mobile app powered by AI that makes nutrition logging effortless. Simply chat with your AI assistant to log meals, get personalized nutrition advice, and track your progress with gamification features.
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![Python](https://img.shields.io/badge/python-3.10+-green.svg)
-![React Native](https://img.shields.io/badge/react--native-0.74-blue.svg)
-![Tests](https://img.shields.io/badge/tests-162%20passing-brightgreen.svg)
+## 🎯 What is AI Diet Tracker?
 
-## 🌟 Features
+AI Diet Tracker is a conversational nutrition app that uses artificial intelligence to make diet tracking as simple as having a conversation. Instead of manually entering calories and macros, just tell the AI what you ate - "I had chicken breast with rice and broccoli" - and it automatically calculates and logs your nutrition.
 
-### Backend (FastAPI + PostgreSQL)
-- 🔐 **JWT Authentication** - Secure user authentication
-- 🏋️ **Multi-gym Support** - Multiple gym locations
-- 🍽️ **Meal Logging** - Manual and AI-powered meal tracking
-- 🤖 **AI Chat Assistant** - OpenAI-powered nutrition advice
-- 🎮 **Gamification System** - XP, levels, badges, and streaks
-- 📊 **Progress Tracking** - Daily and monthly nutrition tracking
-- 🎯 **Personalized Targets** - Custom macro and calorie goals
-- ✅ **162 Passing Tests** - Comprehensive test coverage
+The app combines AI-powered meal logging with gamification (XP, levels, badges, streaks) to make healthy eating engaging and sustainable.
 
-### Mobile App (React Native + Expo)
-- 📱 **Modern UI** - Smooth animations and intuitive design
-- 🎨 **Tab Navigation** - Easy access to all features
-- 📝 **Onboarding Flow** - Personalized setup experience
-- 📊 **Dashboard** - Visual macro tracking with animated rings
-- 🤖 **AI Meal Logging** - Chat with AI to log meals
-- 💬 **Chat History** - Persistent conversation history
-- 🏆 **Gamification** - Earn XP, level up, unlock badges
-- 👤 **Profile Management** - View stats and manage account
+## ✨ Key Features
+
+### 🤖 AI-Powered Meal Logging
+- **Natural Language Input** - Just describe what you ate in plain English
+- **Automatic Macro Calculation** - AI estimates protein, carbs, fats, and calories
+- **Conversation History** - All your chats are saved and synced
+- **Nutrition Advice** - Ask questions and get personalized diet tips
+- **Smart Recognition** - Understands portion sizes, cooking methods, and ingredients
+
+### 📊 Visual Progress Tracking
+- **Interactive Dashboard** - See your daily macro progress at a glance
+- **Animated Macro Rings** - Beautiful circular progress indicators
+- **Hero Card** - Dynamic calorie tracker that changes color based on progress
+- **Monthly Calendar** - Track goal completion over time
+- **XP History Chart** - Visualize your consistency with graphs
+
+### 🎮 Gamification System
+- **XP & Levels** - Earn experience points for logging meals and hitting goals
+- **Streak Tracking** - Build daily streaks with freeze protection
+- **Badge Achievements** - Unlock badges for milestones (First Meal, 7-Day Streak, etc.)
+- **Level-Up Animations** - Celebrate progress with confetti and animations
+- **Leaderboard Ready** - Compete with friends (coming soon)
+
+### 🏋️ Gym Integration
+- **Multi-Gym Support** - Connect with your gym location
+- **Branded Experience** - Gym logos and custom colors throughout the app
+- **Location-Based** - Find gyms in your city (Mumbai, Delhi, Thane, etc.)
+- **Gym Banners** - Promotional carousels for gym events and offers
+
+## 📱 App Pages & Features
+
+### 1. 🏠 Dashboard (Home)
+The main hub showing your daily nutrition progress:
+- **Hero Card** - Large calorie tracker with dynamic gradient (blue → green when goal reached)
+- **Macro Rings** - Circular progress indicators for Protein, Carbs, Fats, and Calories
+- **Today's Meals** - List of all meals logged today with delete option
+- **Gamification Stats** - Current streak, level, and XP progress
+- **Monthly Preview** - Quick view of this month's goal completion
+- **Pull to Refresh** - Update all data with a swipe down
+
+### 2. 🤖 AI Chat
+Conversational meal logging and nutrition assistant:
+- **Chat Interface** - Natural conversation with AI assistant
+- **Quick Actions** - Pre-filled prompts for common tasks
+- **Meal Logging** - Say "I ate chicken and rice" to log meals automatically
+- **Nutrition Advice** - Ask questions like "Should I eat more protein?"
+- **Progress Queries** - Check your weekly/monthly progress via chat
+- **Chat History** - All conversations are saved and synced
+- **Typing Indicator** - See when AI is thinking
+- **Success Animations** - Confetti when meals are logged
+
+### 3. 📝 Log Meal (Manual)
+Traditional meal logging with AI assistance:
+- **AI-Powered Input** - Describe meal in natural language
+- **Macro Breakdown** - See estimated protein, carbs, fats, calories
+- **Confirmation Card** - Review before saving
+- **Edit Macros** - Adjust AI estimates if needed
+- **Quick Log** - Save meals in seconds
+- **XP Rewards** - Earn XP for each meal logged
+
+### 4. 🏆 Gamification Profile
+Comprehensive view of your achievements:
+- **Level Badge** - Large animated badge showing current level
+- **XP Progress Bar** - Visual progress to next level
+- **Streak Stats** - Current streak and highest streak
+- **Streak Freezes** - Available freeze count for missed days
+- **Badge Grid** - All unlocked and locked achievements
+- **XP History Chart** - 30-day graph of XP earned
+- **Pull to Refresh** - Update all gamification data
+
+### 5. 📅 Monthly Progress
+Calendar view of your nutrition journey:
+- **Goal Calendar** - Visual grid showing daily goal completion
+- **Color Coding** - Green (goal met), yellow (partial), gray (missed)
+- **Monthly Stats** - Total days, completion rate, current streak
+- **Weekly Averages** - See which days you perform best
+- **Month Navigation** - Swipe between months
+- **Detailed View** - Tap any day to see full breakdown
+
+### 6. 🏋️ Gym
+Gym information and promotions:
+- **Gym Banner Carousel** - Swipeable promotional banners
+- **Gym Details** - Name, location, description
+- **Branded Colors** - UI adapts to gym's primary color
+- **Contact Info** - Quick access to gym details
+- **Location Map** - Find your gym (coming soon)
+
+### 7. 👤 Profile
+Account management and settings:
+- **User Info** - Email, name, gym membership
+- **Macro Targets** - View and edit daily goals
+- **Onboarding Data** - Age, gender, height, weight, fitness goal
+- **Account Actions** - Logout, delete account
+- **App Version** - Current version info
+- **Support Links** - Help and feedback
+
+### 8. 🎯 Onboarding Flow
+Personalized setup for new users:
+- **Welcome Screen** - Introduction to the app
+- **Gender Selection** - Male, Female, Other
+- **Age Input** - Enter your age
+- **Height Input** - Metric or imperial units
+- **Weight Input** - Current weight
+- **Goal Selection** - Lose weight, maintain, gain muscle
+- **Completion** - Automatic macro target calculation
+
+### 9. 🔐 Authentication
+Secure login and registration:
+- **Login** - Email and password
+- **Register** - Create new account
+- **Location Selection** - Choose your city
+- **Gym Selection** - Pick your gym from the list
+- **JWT Tokens** - Secure authentication
+- **Auto-Login** - Stay logged in
 
 ## 🚀 Quick Start
 
@@ -41,8 +135,8 @@ A full-stack mobile application for tracking nutrition, meals, and fitness goals
 
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/gym-diet-tracker.git
-cd gym-diet-tracker
+git clone https://github.com/YOUR_USERNAME/ai-diet-tracker.git
+cd ai-diet-tracker
 
 # Create virtual environment
 python -m venv venv
@@ -62,9 +156,6 @@ alembic upgrade head
 uvicorn app.main:app --reload
 ```
 
-Backend available at: http://localhost:8000
-API Docs: http://localhost:8000/docs
-
 ### Mobile Setup
 
 ```bash
@@ -80,83 +171,42 @@ npx expo start
 # Scan QR code with Expo Go app
 ```
 
-## 📦 Tech Stack
 
-### Backend
-- **FastAPI** - Modern Python web framework
-- **PostgreSQL** - Relational database
-- **SQLAlchemy** - ORM
-- **Alembic** - Database migrations
-- **OpenAI API** - AI chat functionality
-- **JWT** - Authentication
-- **Pytest** - Testing
+## 🎯 How It Works
 
-### Mobile
-- **React Native** - Cross-platform mobile framework
-- **Expo** - Development platform
-- **TypeScript** - Type safety
-- **Zustand** - State management
-- **React Native Reanimated** - Animations
-- **NativeWind** - Tailwind CSS for React Native
-- **Expo Router** - File-based routing
-
-## 🎯 Key Features Explained
+### AI Meal Logging Flow
+1. User types: "I ate 200g chicken breast with 150g rice and broccoli"
+2. Message sent to OpenAI GPT-4 with nutrition context
+3. AI extracts meal components and estimates macros
+4. Backend saves meal to database
+5. User earns XP for logging
+6. Dashboard updates with new totals
+7. Confetti animation if goal reached
 
 ### Gamification System
-- **XP System**: Earn XP for logging meals and hitting goals
-- **Levels**: Progress through levels with increasing XP requirements
-- **Streaks**: Maintain daily activity streaks with freeze protection
-- **Badges**: Unlock achievements for milestones
-- **Animations**: Smooth level-up and badge unlock animations
+- **XP Calculation**: Base XP (10) + Bonus for hitting goals
+- **Level Formula**: XP required = 100 × level
+- **Streak Rules**: Log at least 1 meal per day to maintain streak
+- **Freeze System**: Use freezes to protect streak on missed days
+- **Badge Triggers**: Automatic unlock when conditions are met
 
-### AI-Powered Meal Logging
-- Natural language meal input
-- Automatic macro calculation
-- Conversation history
-- Nutrition advice and tips
-
-### Progress Tracking
-- Daily macro totals with visual rings
-- Monthly goal completion calendar
-- Weekly averages
-- Personalized nutrition targets
-
-## 📱 Screenshots
-
-(Add screenshots of your app here)
-
-## 🚀 Deployment
-
-### Deploy Backend to Railway
-
-```bash
-# See detailed guide
-cat DEPLOY_TO_RAILWAY.md
+### Data Flow
+```
+Mobile App → API Request → FastAPI Backend → PostgreSQL Database
+                ↓
+         OpenAI API (for AI features)
+                ↓
+         Response → Update UI → Animations
 ```
 
-Quick steps:
-1. Push code to GitHub
-2. Connect Railway to your repository
-3. Add PostgreSQL database
-4. Set environment variables
-5. Deploy automatically
+## 🎨 Design Philosophy
 
-### Build Android APK
-
-```bash
-# See detailed guide
-cat BUILD_APK_GUIDE.md
-```
-
-Quick steps:
-1. Install EAS CLI: `npm install -g eas-cli`
-2. Login: `eas login`
-3. Build: `eas build --platform android --profile preview`
-4. Download and install APK
-
-### Complete Deployment Guide
-
-See [DEPLOYMENT_QUICK_START.md](DEPLOYMENT_QUICK_START.md) for a 30-minute deployment guide.
+- **Conversation First** - Make nutrition tracking feel like chatting with a friend
+- **Visual Feedback** - Animations and colors provide instant feedback
+- **Gamification** - Make healthy habits fun and rewarding
+- **Minimal Friction** - Log meals in seconds, not minutes
+- **Beautiful UI** - Modern design with smooth animations
+- **Data Transparency** - Always show what the AI calculated
 
 ## 🧪 Testing
 
@@ -175,6 +225,15 @@ pytest tests/ --cov=app --cov-report=html
 
 All 162 tests should pass ✅
 
+Test coverage includes:
+- Authentication & JWT tokens
+- Meal logging and CRUD operations
+- AI chat integration
+- Gamification (XP, levels, streaks, badges)
+- Multi-gym support
+- Progress tracking
+- Timezone handling
+
 ### Mobile Tests
 
 ```bash
@@ -182,57 +241,29 @@ cd mobile
 npm test
 ```
 
-## 📚 Documentation
 
-- [Complete Deployment Guide](COMPLETE_DEPLOYMENT_GUIDE.md)
-- [Railway Deployment](DEPLOY_TO_RAILWAY.md)
-- [APK Build Guide](BUILD_APK_GUIDE.md)
-- [Quick Start](DEPLOYMENT_QUICK_START.md)
-- [GitHub Upload Guide](GITHUB_UPLOAD_GUIDE.md)
 
-## 🔧 Configuration
 
-### Environment Variables
+## 🎯 Use Cases
 
-Create `.env` file in root directory:
+### For Gym Members
+- Track nutrition alongside workouts
+- Get AI-powered meal suggestions
+- Compete with gym friends (coming soon)
+- See gym promotions and events
 
-```env
-# Database
-DATABASE_URL=postgresql://user:password@localhost/gym_diet
+### For Fitness Enthusiasts
+- Effortless meal logging via chat
+- Visual progress tracking
+- Gamified habit building
+- Personalized macro targets
 
-# JWT
-SECRET_KEY=your-secret-key-here
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=10080
+### For Gyms
+- Branded member experience
+- Nutrition tracking for clients
+- Engagement through gamification
+- Promotional banner space
 
-# OpenAI
-OPENAI_API_KEY=your-openai-api-key
-
-# Environment
-ENVIRONMENT=development
-```
-
-### Mobile Configuration
-
-Edit `mobile/config/api.ts` to set your backend URL:
-
-```typescript
-const PRODUCTION_API_URL = 'https://your-app.railway.app';
-```
-
-## 💰 Cost Breakdown
-
-### Development (Free)
-- Local development: $0
-- Expo Go testing: $0
-- GitHub: $0
-
-### Production
-- **Railway Hobby**: $5/month (backend + database)
-- **EAS Build Free**: 30 builds/month
-- **OpenAI API**: Pay-as-you-go (~$0.002/message)
-
-**Total**: ~$5-10/month
 
 ## 🤝 Contributing
 
@@ -248,32 +279,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 👤 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
 
-## 🙏 Acknowledgments
-
-- OpenAI for AI chat functionality
-- Expo team for amazing mobile development tools
-- FastAPI for the excellent backend framework
-- Railway for easy deployment
-
-## 📞 Support
-
-For support, email your-email@example.com or open an issue on GitHub.
-
-## 🗺️ Roadmap
-
-- [ ] iOS app build
-- [ ] Push notifications
-- [ ] Social features (friends, challenges)
-- [ ] Barcode scanning for food items
-- [ ] Recipe suggestions
-- [ ] Workout tracking integration
-- [ ] Premium features
-
----
-
-Made with ❤️ by Your Name
+If you find this project useful, please consider giving it a star ⭐
