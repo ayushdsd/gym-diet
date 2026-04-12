@@ -9,6 +9,9 @@ AI Diet Tracker is a conversational nutrition app that uses artificial intellige
 The app combines AI-powered meal logging with gamification (XP, levels, badges, streaks) to make healthy eating engaging and sustainable.
 
 ## Key Features
+<img width="335" height="750" alt="image" src="https://github.com/user-attachments/assets/442bba35-32c0-4d25-8f57-f8f508063b96" />
+<img width="334" height="750" alt="image" src="https://github.com/user-attachments/assets/981829fa-eff7-4f84-9066-72e59b789b56" />
+
 
 ### AI-Powered Meal Logging
 - **Natural Language Input** - Just describe what you ate in plain English
@@ -329,28 +332,6 @@ OPENAI_API_KEY=your-openai-api-key
 ENVIRONMENT=development
 ```
 
-### Mobile Configuration
-
-Edit `mobile/config/api.ts` to set your backend URL:
-
-```typescript
-const PRODUCTION_API_URL = 'https://gym-diet-production-9285.up.railway.app';
-```
-
-## Cost Breakdown
-
-### Development (Free)
-- Local development: $0
-- Expo Go testing: $0
-- GitHub: $0
-
-### Production
-- **Railway Hobby**: $5/month (backend + database)
-- **EAS Build Free**: 30 builds/month
-- **OpenAI API**: Pay-as-you-go (~$0.002/message)
-
-**Total**: ~$5-10/month
-
 ## Use Cases
 
 ### For Gym Members
@@ -371,61 +352,8 @@ const PRODUCTION_API_URL = 'https://gym-diet-production-9285.up.railway.app';
 - Engagement through gamification
 - Promotional banner space
 
-## Roadmap
-
-### Phase 1 (Current)
-- AI meal logging
-- Gamification system
-- Multi-gym support
-- Monthly progress tracking
-- Chat history
-
-### Phase 2 (Next)
-- Hero card animations (Lottie)
-- Push notifications
-- Barcode scanning
-- Photo meal logging
-- Recipe database
-
-### Phase 3 (Future)
-- iOS app build
-- Social features (friends, challenges)
-- Workout tracking integration
-- Meal planning
-- Premium features
-- Gym admin dashboard
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Author
-
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-
-## Acknowledgments
-
-- OpenAI for GPT-4 and AI chat functionality
-- Expo team for amazing mobile development tools
-- FastAPI for the excellent backend framework
-- Railway for easy deployment
-- LottieFiles for beautiful animations
-
-## Support
-
-For support, email your-email@example.com or open an issue on GitHub.
-
----
-
-Made with AI
